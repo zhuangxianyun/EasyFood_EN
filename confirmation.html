@@ -464,8 +464,10 @@
           <div class="delivery-option">
             <h3>自提地点</h3>
             <select id="pickup-location">
-              <option value="Massy">Massy Palaiseau站</option>
-              <option value="Cite">Cite University站</option>
+              <option value="Massy">
+                Massy Palaiseau站 （Le Calypso店前）
+              </option>
+              <option value="Cite">Cite University站 （Eurl Kvma店前）</option>
             </select>
           </div>
           <div class="delivery-option">
@@ -494,7 +496,7 @@
             <input type="text" placeholder="自提柜编号 例：FR-19104" />
           </div>
           <div class="delivery-option">
-            <h4>送到家(实际配送费用需另计算，提交订单后和您确认)</h4>
+            <h4>送到家(实际配送费用需另计算，确认订单后和您人工确认)</h4>
             <input type="text" placeholder="姓名" />
             <input type="tel" placeholder="联系电话" />
             <textarea placeholder="详细地址"></textarea>
@@ -816,7 +818,7 @@
           document.getElementById("SelfPickup").style.display = "block";
 
           // 初始化配送费用为0（自提）
-          updateTotalPrice(0);
+          updateTotalPrice(true);
         } else {
           alert("无法获取购物车数据，请返回主页重新操作。");
           window.location.href = "index.html";
@@ -857,7 +859,7 @@
         }
 
         // 验证自提/配送信息
-        let lockerAddressElement, lockerNumberElement;
+        let deliveryDetails = "";
 
         if (isSelfPickup) {
           // 验证自提信息
@@ -865,112 +867,84 @@
           const date = document.getElementById("pickup-date").value;
           const time = document.getElementById("pickup-time").value;
 
-          if (!location) {
-            alert("请选择自提地点");
-            return;
-          }
-          if (!date) {
-            alert("请选择自提日期");
-            return;
-          }
-          if (!time) {
-            alert("请选择自提时间");
+          if (!location || !date || !time) {
+            alert("请完整填写自提信息");
             return;
           }
 
-          // 验证日期是否有效（不能选择过去的日期）
-          const selectedDate = new Date(date);
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-
-          if (selectedDate < today) {
-            alert("请选择今天或未来的日期");
-            return;
-          }
+          deliveryDetails = `自提地点: ${location}\n自提日期: ${date}\n自提时间: ${time}`;
         } else {
           // 验证配送信息
+          const lockerAddress = document.querySelector(
+            "#Delivery input[placeholder='自提柜地址 例：MAGIC FORM 7 AVENUE SAINT-MARC 91300 MASSY']"
+          ).value;
+          const lockerNumber = document.querySelector(
+            "#Delivery input[placeholder='自提柜编号 例：FR-19104']"
+          ).value;
           const address = document.querySelector("#Delivery textarea").value;
-          const deliveryContainer = document.getElementById("Delivery");
+          const name = document.querySelector(
+            "#Delivery input[placeholder='姓名']"
+          ).value;
+          const phone = document.querySelector(
+            "#Delivery input[placeholder='联系电话']"
+          ).value;
 
-          if (deliveryContainer) {
-            lockerAddressElement = deliveryContainer.querySelector(
-              "input[placeholder='自提柜地址 例：MAGIC FORM 7 AVENUE SAINT-MARC 91300 MASSY']"
-            );
-            lockerNumberElement = deliveryContainer.querySelector(
-              "input[placeholder='自提柜编号 例：FR-19104']"
-            );
+          // 允许填写自提柜信息或送到家信息
+          if (
+            (!lockerAddress || !lockerNumber) &&
+            (!address || !name || !phone)
+          ) {
+            alert("请填写完整的配送信息（自提柜信息或送到家信息）");
+            return;
+          }
 
-            // 获取送到家信息
-            const name = deliveryContainer.querySelector(
-              "input[placeholder='姓名']"
-            ).value;
-            const phone = deliveryContainer.querySelector(
-              "input[placeholder='联系电话']"
-            ).value;
-
-            if (!address && (!lockerAddressElement || !lockerNumberElement)) {
-              alert("请填写完整的配送信息（送到家地址或自提柜信息）");
-              return;
-            }
-
-            // 填充配送信息
-            let deliveryDetails = "";
-            if (address) {
-              deliveryDetails = `送货地址: ${address}\n姓名: ${name}\n联系电话: ${phone}`;
-            } else {
-              const lockerAddress = lockerAddressElement
-                ? lockerAddressElement.value
-                : "";
-              const lockerNumber = lockerNumberElement
-                ? lockerNumberElement.value
-                : "";
-              deliveryDetails = `自提柜地址: ${lockerAddress}\n自提柜编号: ${lockerNumber}`;
-            }
-
-            // 填充小票内容
-            document.getElementById("receipt-datetime").textContent =
-              new Date().toLocaleString();
-
-            // 填充订单项目
-            const receiptItems = document.getElementById("receipt-items");
-            receiptItems.innerHTML = "";
-            const cartData = JSON.parse(localStorage.getItem("cartData"));
-            cartData.forEach((item) => {
-              const itemDiv = document.createElement("div");
-              itemDiv.className = "receipt-item";
-              itemDiv.innerHTML = `
-                <span>${item.name} x${item.quantity}</span>
-                <span>€${(item.price * item.quantity).toFixed(2)}</span>
-              `;
-              receiptItems.appendChild(itemDiv);
-            });
-
-            // 填充总价信息
-            document.getElementById("receipt-subtotal").textContent =
-              document.getElementById("subtotal").textContent;
-            document.getElementById("receipt-shipping").textContent =
-              document.getElementById("shipping-fee").textContent;
-            document.getElementById("receipt-total").textContent =
-              document.getElementById("total-price").textContent;
-
-            // 填充配送信息
-            document.getElementById(
-              "receipt-delivery-method"
-            ).textContent = `配送方式：${isSelfPickup ? "自提" : "配送"}`;
-            document.getElementById("receipt-delivery-details").textContent =
-              deliveryDetails;
-
-            // 填充联系方式
-            document.getElementById(
-              "receipt-contact-info"
-            ).textContent = `昵称：${nickname}\n微信号：${wechat}`;
-
-            // 显示小票
-            document.getElementById("receiptModal").style.display = "block";
+          if (lockerAddress && lockerNumber) {
+            deliveryDetails = `自提柜地址: ${lockerAddress}\n自提柜编号: ${lockerNumber}`;
           } else {
-            console.error("Delivery container not found");
+            deliveryDetails = `送货地址: ${address}\n姓名: ${name}\n联系电话: ${phone}`;
           }
         }
+
+        // 填充小票内容
+        document.getElementById("receipt-datetime").textContent =
+          new Date().toLocaleString();
+
+        // 填充订单项目
+        const receiptItems = document.getElementById("receipt-items");
+        receiptItems.innerHTML = "";
+        const cartData = JSON.parse(localStorage.getItem("cartData"));
+        cartData.forEach((item) => {
+          const itemDiv = document.createElement("div");
+          itemDiv.className = "receipt-item";
+          itemDiv.innerHTML = `
+            <span>${item.name} x${item.quantity}</span>
+            <span>€${(item.price * item.quantity).toFixed(2)}</span>
+          `;
+          receiptItems.appendChild(itemDiv);
+        });
+
+        // 填充总价信息
+        document.getElementById("receipt-subtotal").textContent =
+          document.getElementById("subtotal").textContent;
+        document.getElementById("receipt-shipping").textContent =
+          document.getElementById("shipping-fee").textContent;
+        document.getElementById("receipt-total").textContent =
+          document.getElementById("total-price").textContent;
+
+        // 填充配送信息
+        document.getElementById(
+          "receipt-delivery-method"
+        ).textContent = `配送方式：${isSelfPickup ? "自提" : "配送"}`;
+        document.getElementById("receipt-delivery-details").textContent =
+          deliveryDetails;
+
+        // 填充联系方式
+        document.getElementById(
+          "receipt-contact-info"
+        ).textContent = `昵称：${nickname}\n微信号：${wechat}`;
+
+        // 显示小票
+        document.getElementById("receiptModal").style.display = "block";
       }
 
       function closeReceipt() {
