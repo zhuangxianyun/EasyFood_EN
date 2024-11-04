@@ -5,6 +5,7 @@ const products = [
     name: "梅菜扣肉",
     price: 5.5,
     stock: 20,
+    weight: 180,
     image: "./images/meicaikourou.jpg",
     ingredients: "猪肉、梅干菜、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -15,6 +16,7 @@ const products = [
     name: "台式卤肉",
     price: 5.5,
     stock: 20,
+    weight: 170,
     image: "./images/taisheluru.jpg",
     ingredients: "猪肉、卤肉粉、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -25,6 +27,7 @@ const products = [
     name: "毛氏红烧肉",
     price: 5.5,
     stock: 12,
+    weight: 200,
     image: "./images/maoshihongshaorou.jpg",
     ingredients: "猪肉、红烧肉粉、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -35,6 +38,7 @@ const products = [
     name: "鱼香肉丝",
     price: 5.0,
     stock: 15,
+    weight: 200,
     image: "./images/yuxiangrousi.jpg",
     ingredients: "猪肉、鱼香粉、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -45,6 +49,7 @@ const products = [
     name: "咖喱鸡肉",
     price: 5.0,
     stock: 10,
+    weight: 220,
     image: "./images/galijirou.jpg",
     ingredients: "鸡肉、咖喱粉、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -55,6 +60,7 @@ const products = [
     name: "辣子鸡",
     price: 5.0,
     stock: 8,
+    weight: 170,
     image: "./images/laziji.jpg",
     ingredients: "鸡肉、辣子粉、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -66,6 +72,7 @@ const products = [
     name: "黄豆闷猪肘",
     price: 5.5,
     stock: 20,
+    weight: 200,
     image: "./images/huangdoumenzhuzhou.jpg",
     ingredients: "猪肘、黄豆、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -76,6 +83,7 @@ const products = [
     name: "黑椒肉丸",
     price: 5.5,
     stock: 20,
+    weight: 200,
     image: "./images/heijiaorouwan.jpg",
     ingredients: "猪肉、黑椒粉、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -86,6 +94,7 @@ const products = [
     name: "番茄牛腩",
     price: 5.8,
     stock: 20,
+    weight: 200,
     image: "./images/fanqieniunan.jpg",
     ingredients: "牛腩、番茄、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -96,6 +105,7 @@ const products = [
     name: "牛肉麻婆豆腐",
     price: 5.0,
     stock: 20,
+    weight: 200,
     image: "./images/niuroumapodoufu.jpg",
     ingredients: "牛肉、豆腐、麻婆豆腐酱、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -106,6 +116,7 @@ const products = [
     name: "肉丁炸酱",
     price: 4.8,
     stock: 20,
+    weight: 100,
     image: "./images/roudingzhajiang.jpg",
     ingredients: "猪肉、炸酱、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -116,6 +127,7 @@ const products = [
     name: "牛肉菌菇",
     price: 4.8,
     stock: 20,
+    weight: 100,
     image: "./images/niuroujungou.jpg",
     ingredients: "牛肉、菌菇、酱油、葱姜蒜、八角等",
     expiry: "常温12个月",
@@ -139,6 +151,7 @@ function renderProducts() {
       product.id
     })" onerror="this.src='./images/placeholder.jpg'">
             <h3>${product.name}</h3>
+            <p>${product.weight}g</p>
             <p class="price">€${product.price.toFixed(2)}</p>
             <p class="stock">剩余 ${product.stock} 份</p>
             <div class="quantity-control">
@@ -155,7 +168,6 @@ function renderProducts() {
     productList.appendChild(productCard);
   });
 }
-
 function changeQuantity(productId, change) {
   const input = document.getElementById(`quantity-${productId}`);
   let newValue = parseInt(input.value) + change;
@@ -223,34 +235,42 @@ function goToConfirmation() {
 // 新增：显示商品详情的函数
 function showProductDetails(productId) {
   const product = products.find((p) => p.id === productId);
-  const modal = document.getElementById("product-modal");
-  const modalImage = document.getElementById("modal-image");
-  const modalTitle = document.getElementById("modal-title");
-  const modalIngredients = document.getElementById("modal-ingredients");
-  const modalExpiry = document.getElementById("modal-expiry");
-  const modalStorage = document.getElementById("modal-storage");
+  if (product) {
+    document.getElementById("modal-image").src = product.image;
+    document.getElementById("modal-title").textContent = product.name;
+    document.getElementById(
+      "modal-ingredients"
+    ).textContent = `配料：${product.ingredients}`;
+    document.getElementById(
+      "modal-expiry"
+    ).textContent = `保质期：${product.expiry}`;
+    document.getElementById(
+      "modal-storage"
+    ).textContent = `储存建议：${product.storage}`;
 
-  modalImage.src = product.image;
-  modalImage.alt = product.name;
-  modalTitle.textContent = product.name;
-  modalIngredients.textContent = `配料：${product.ingredients}`;
-  modalExpiry.textContent = `保质期：${product.expiry}`;
-  modalStorage.textContent = `储存建议：${product.storage}`;
+    const modalWeight = document.getElementById("modal-weight");
+    if (modalWeight) {
+      modalWeight.textContent = `重量：${product.weight}g`;
+    } else {
+      const newWeightElement = document.createElement("p");
+      newWeightElement.id = "modal-weight";
+      newWeightElement.textContent = `重量：${product.weight}g`;
+      document.querySelector(".modal-content").appendChild(newWeightElement);
+    }
 
-  modal.style.display = "block";
+    document.getElementById("product-modal").style.display = "block";
+  }
 }
-
 // 新增：关闭模态框的函数
 function closeModal() {
-  const modal = document.getElementById("product-modal");
-  modal.style.display = "none";
+  document.getElementById("product-modal").style.display = "none";
 }
 
 // 新增：点击模态框外部关模态框
 window.onclick = function (event) {
   const modal = document.getElementById("product-modal");
   if (event.target == modal) {
-    modal.style.display = "none";
+    closeModal();
   }
 };
 

@@ -491,15 +491,23 @@
             </p>
             <input
               type="text"
+              id="locker-address"
               placeholder="自提柜地址 例：MAGIC FORM 7 AVENUE SAINT-MARC 91300 MASSY"
             />
-            <input type="text" placeholder="自提柜编号 例：FR-19104" />
+            <input
+              type="text"
+              id="locker-number"
+              placeholder="自提柜编号 例：FR-19104"
+            />
+            <input type="text" id="locker-name" placeholder="姓名" />
+            <input type="tel" id="locker-phone" placeholder="联系电话" />
+            <input type="email" id="locker-email" placeholder="邮箱" />
           </div>
           <div class="delivery-option">
             <h4>送到家(实际配送费用需另计算，确认订单后和您人工确认)</h4>
-            <input type="text" placeholder="姓名" />
-            <input type="tel" placeholder="联系电话" />
-            <textarea placeholder="详细地址"></textarea>
+            <input type="text" id="home-name" placeholder="姓名" />
+            <input type="tel" id="home-phone" placeholder="联系电话" />
+            <textarea id="home-address" placeholder="详细地址"></textarea>
           </div>
         </div>
       </div>
@@ -547,7 +555,6 @@
         <span class="close-receipt" onclick="closeReceipt()">&times;</span>
         <div class="receipt-header">
           <h2>订单确认清单</h2>
-          <p>巴黎料理包自助订购</p>
           <p id="receipt-datetime"></p>
         </div>
         <div class="receipt-items" id="receipt-items">
@@ -555,7 +562,7 @@
         </div>
         <div class="receipt-total">
           <div class="receipt-item">
-            <span>商总价：</span>
+            <span>商品总价：</span>
             <span id="receipt-subtotal"></span>
           </div>
           <div class="receipt-item">
@@ -578,7 +585,7 @@
         </div>
         <div class="receipt-footer">
           <p>感谢您的订购！</p>
-          <p><strong>请务必击保存订单证！</strong></p>
+          <p><strong>请务必点击保存订单，下载订单图片！</strong></p>
           <div class="receipt-buttons">
             <button class="receipt-button save-button" onclick="saveReceipt()">
               保存订单
@@ -860,6 +867,7 @@
 
         // 验证自提/配送信息
         let deliveryDetails = "";
+        let contactDetails = `昵称：${nickname}\n微信号：${wechat}`;
 
         if (isSelfPickup) {
           // 验证自提信息
@@ -875,33 +883,36 @@
           deliveryDetails = `自提地点: ${location}\n自提日期: ${date}\n自提时间: ${time}`;
         } else {
           // 验证配送信息
-          const lockerAddress = document.querySelector(
-            "#Delivery input[placeholder='自提柜地址 例：MAGIC FORM 7 AVENUE SAINT-MARC 91300 MASSY']"
-          ).value;
-          const lockerNumber = document.querySelector(
-            "#Delivery input[placeholder='自提柜编号 例：FR-19104']"
-          ).value;
-          const address = document.querySelector("#Delivery textarea").value;
-          const name = document.querySelector(
-            "#Delivery input[placeholder='姓名']"
-          ).value;
-          const phone = document.querySelector(
-            "#Delivery input[placeholder='联系电话']"
-          ).value;
+          const lockerAddress = document.getElementById("locker-address").value;
+          const lockerNumber = document.getElementById("locker-number").value;
+          const lockerName = document.getElementById("locker-name").value;
+          const lockerPhone = document.getElementById("locker-phone").value;
+          const lockerEmail = document.getElementById("locker-email").value;
+          const homeName = document.getElementById("home-name").value;
+          const homePhone = document.getElementById("home-phone").value;
+          const homeAddress = document.getElementById("home-address").value;
 
           // 允许填写自提柜信息或送到家信息
-          if (
-            (!lockerAddress || !lockerNumber) &&
-            (!address || !name || !phone)
-          ) {
+          const isLockerInfoComplete =
+            lockerAddress &&
+            lockerNumber &&
+            lockerName &&
+            lockerPhone &&
+            lockerEmail;
+          const isHomeDeliveryInfoComplete =
+            homeAddress && homeName && homePhone;
+
+          if (!isLockerInfoComplete && !isHomeDeliveryInfoComplete) {
             alert("请填写完整的配送信息（自提柜信息或送到家信息）");
             return;
           }
 
-          if (lockerAddress && lockerNumber) {
+          if (isLockerInfoComplete) {
             deliveryDetails = `自提柜地址: ${lockerAddress}\n自提柜编号: ${lockerNumber}`;
+            contactDetails += `\n姓名：${lockerName}\n联系电话：${lockerPhone}\n邮箱：${lockerEmail}`;
           } else {
-            deliveryDetails = `送货地址: ${address}\n姓名: ${name}\n联系电话: ${phone}`;
+            deliveryDetails = `送货地址: ${homeAddress}`;
+            contactDetails += `\n姓名：${homeName}\n联系电话：${homePhone}`;
           }
         }
 
@@ -939,9 +950,8 @@
           deliveryDetails;
 
         // 填充联系方式
-        document.getElementById(
-          "receipt-contact-info"
-        ).textContent = `昵称：${nickname}\n微信号：${wechat}`;
+        document.getElementById("receipt-contact-info").textContent =
+          contactDetails;
 
         // 显示小票
         document.getElementById("receiptModal").style.display = "block";
