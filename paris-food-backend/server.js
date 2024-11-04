@@ -8,8 +8,11 @@ const path = require("path");
 const app = express();
 
 const corsOptions = {
-  origin: "https://easy-food-ten.vercel.app", // 允许的前端应用的URL
-  optionsSuccessStatus: 200, // 一些旧版浏览器对204状态不兼容
+  origin: [
+    "https://easy-food-ten.vercel.app", // Existing allowed URL
+    "https://easy-food-psi.vercel.app", // New URL to be added
+  ],
+  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
 };
 
 // 中间件

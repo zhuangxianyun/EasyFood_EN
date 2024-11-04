@@ -12,7 +12,6 @@ const orderSchema = new mongoose.Schema(
     },
     location: {
       type: String,
-      required: true,
     },
     orderItems: [
       {
@@ -26,11 +25,9 @@ const orderSchema = new mongoose.Schema(
     total: String,
     pickupDate: {
       type: String,
-      required: true,
     },
     pickupTime: {
       type: String,
-      required: true,
     },
     orderTime: {
       type: String,
