@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>订单确认 - 巴黎料理包自助订购</title>
+    <title>Order Confirmation - Paris Meal Kit Self-Service Ordering</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link
@@ -11,7 +11,7 @@
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://npmcdn.com/flatpickr/dist/l10n/zh.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/en.js"></script>
     <style>
       :root {
         --primary-color: #ff6b6b;
@@ -432,166 +432,185 @@
   </head>
   <body>
     <header>
-      <div class="logo">中华料理包-巴黎站</div>
+      <div class="logo">Chinese Meal Kit - Paris Station</div>
       <nav>
         <ul>
-          <li><a href="index.html">主页</a></li>
-          <li><a href="#cart">购物车</a></li>
-          <li><a href="#contact" onclick="showContactImage()">联系我们</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#cart">Cart</a></li>
+          <li>
+            <a href="#contact" onclick="showContactImage()">Contact Us</a>
+          </li>
         </ul>
       </nav>
     </header>
 
     <main class="confirmation-container">
       <div class="delivery-options">
-        <h2>配送方式</h2>
+        <h2>Delivery Method</h2>
         <div class="tab">
           <button
             class="tablinks active"
             onclick="openDeliveryOption(event, 'SelfPickup')"
           >
-            自提
+            Self Pickup
           </button>
           <button
             class="tablinks"
             onclick="openDeliveryOption(event, 'Delivery')"
           >
-            配送
+            Delivery
           </button>
         </div>
 
         <div id="SelfPickup" class="tabcontent" style="display: block">
           <div class="delivery-option">
-            <h3>自提地点</h3>
+            <h3>Pickup Location</h3>
             <select id="pickup-location">
               <option value="Massy">
-                Massy Palaiseau站 （Le Calypso店前）
+                Massy Palaiseau Station (In front of Le Calypso)
               </option>
-              <option value="Cite">Cite University站 （Eurl Kvma店前）</option>
+              <option value="Cite">
+                Cite University Station (In front of Eurl Kvma)
+              </option>
             </select>
           </div>
           <div class="delivery-option">
-            <h3>自提时间</h3>
+            <h3>Pickup Time</h3>
             <input type="date" id="pickup-date" />
             <select id="pickup-time">
-              <!-- 选项将通过 JavaScript 动态添加 -->
+              <!-- Options will be dynamically added by JavaScript -->
             </select>
           </div>
         </div>
 
         <div id="Delivery" class="tabcontent">
           <div class="delivery-option">
-            <h4>自提柜</h4>
+            <h4>Locker</h4>
             <p>
-              查找最近的自提柜：<a
+              Find the nearest locker:
+              <a
                 href="https://www.mondialrelay.fr/trouver-le-point-relais-le-plus-proche-de-chez-moi/"
                 target="_blank"
-                >查询自提柜</a
+                >Check Locker</a
               >
             </p>
             <input
               type="text"
               id="locker-address"
-              placeholder="自提柜地址 例：MAGIC FORM 7 AVENUE SAINT-MARC 91300 MASSY"
+              placeholder="Locker Address e.g., MAGIC FORM 7 AVENUE SAINT-MARC 91300 MASSY"
             />
             <input
               type="text"
               id="locker-number"
-              placeholder="自提柜编号 例：FR-19104"
+              placeholder="Locker Number e.g., FR-19104"
             />
-            <input type="text" id="locker-name" placeholder="姓名" />
-            <input type="tel" id="locker-phone" placeholder="联系电话" />
-            <input type="email" id="locker-email" placeholder="邮箱" />
+            <input type="text" id="locker-name" placeholder="Name" />
+            <input type="tel" id="locker-phone" placeholder="Phone Number" />
+            <input type="email" id="locker-email" placeholder="Email" />
           </div>
           <div class="delivery-option">
-            <h4>送到家(实际配送费用需另计算，确认订单后和您人工确认)</h4>
-            <input type="text" id="home-name" placeholder="姓名" />
-            <input type="tel" id="home-phone" placeholder="联系电话" />
-            <textarea id="home-address" placeholder="详细地址"></textarea>
+            <h4>
+              Home Delivery (Actual delivery cost will be confirmed manually
+              after order confirmation)
+            </h4>
+            <input type="text" id="home-name" placeholder="Name" />
+            <input type="tel" id="home-phone" placeholder="Phone Number" />
+            <textarea
+              id="home-address"
+              placeholder="Detailed Address"
+            ></textarea>
           </div>
         </div>
       </div>
 
-      <!-- 订单明细移动到这里 -->
       <div class="order-details">
-        <h2>订单明细</h2>
+        <h2>Order Details</h2>
         <table id="order-table">
           <tr>
-            <th>商品名称</th>
-            <th>单价</th>
-            <th>数量</th>
-            <th>计</th>
+            <th>Product Name</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
           </tr>
-          <!-- 购物车数据将通过 JavaScript 动态添加 -->
+          <!-- Cart data will be dynamically added by JavaScript -->
         </table>
         <div>
-          <p>商品总价：<span id="subtotal"></span></p>
-          <p>配送费用：<span id="shipping-fee"></span></p>
+          <p>Subtotal: <span id="subtotal"></span></p>
+          <p>Shipping Fee: <span id="shipping-fee"></span></p>
           <p>
-            <strong>订单总价：<span id="total-price"></span></strong>
+            <strong>Total Price: <span id="total-price"></span></strong>
           </p>
         </div>
       </div>
 
       <div class="payment-methods">
-        <h2>联系方式</h2>
+        <h2>Contact Information</h2>
         <div class="contact-info">
           <div class="input-group">
-            <label for="nickname">昵称 （能记住的好识别的~）</label>
-            <input type="text" id="nickname" placeholder="请输入您的昵称" />
+            <label for="nickname">Nickname (Easy to remember)</label>
+            <input
+              type="text"
+              id="nickname"
+              placeholder="Enter your nickname"
+            />
           </div>
           <div class="input-group">
-            <label for="wechat">微信号（方便确认订单）</label>
-            <input type="text" id="wechat" placeholder="请输入您的微信号" />
+            <label for="wechat">WeChat ID (For order confirmation)</label>
+            <input type="text" id="wechat" placeholder="Enter your WeChat ID" />
           </div>
         </div>
       </div>
 
-      <button class="confirm-button" onclick="confirmOrder()">确认</button>
+      <button class="confirm-button" onclick="confirmOrder()">Confirm</button>
     </main>
 
     <div id="receiptModal" class="receipt-modal">
       <div class="receipt-content">
         <span class="close-receipt" onclick="closeReceipt()">&times;</span>
         <div class="receipt-header">
-          <h2>订单确认清单</h2>
+          <h2>Order Confirmation Receipt</h2>
           <p id="receipt-datetime"></p>
         </div>
         <div class="receipt-items" id="receipt-items">
-          <!-- 订单项目将通过 JavaScript 动态添加 -->
+          <!-- Order items will be dynamically added by JavaScript -->
         </div>
         <div class="receipt-total">
           <div class="receipt-item">
-            <span>商品总价：</span>
+            <span>Subtotal:</span>
             <span id="receipt-subtotal"></span>
           </div>
           <div class="receipt-item">
-            <span>配送费用：</span>
+            <span>Shipping Fee:</span>
             <span id="receipt-shipping"></span>
           </div>
           <div class="receipt-item">
-            <strong>订单总价：</strong>
+            <strong>Total Price:</strong>
             <strong id="receipt-total"></strong>
           </div>
         </div>
         <div class="receipt-delivery">
-          <h3>配送信息</h3>
+          <h3>Delivery Information</h3>
           <p id="receipt-delivery-method"></p>
           <p id="receipt-delivery-details"></p>
         </div>
         <div class="receipt-contact">
-          <h3>联系方式</h3>
+          <h3>Contact Information</h3>
           <p id="receipt-contact-info"></p>
         </div>
         <div class="receipt-footer">
-          <p>感谢您的订购！</p>
-          <p><strong>请务必点击保存订单，下载订单图片！</strong></p>
+          <p>Thank you for your order!</p>
+          <p>
+            <strong
+              >Please be sure to click Save Order to download the order
+              image!</strong
+            >
+          </p>
           <div class="receipt-buttons">
             <button class="receipt-button save-button" onclick="saveReceipt()">
-              保存订单
+              Save Order
             </button>
             <button class="receipt-button edit-button" onclick="closeReceipt()">
-              返回修改
+              Return to Edit
             </button>
           </div>
         </div>
@@ -600,23 +619,7 @@
 
     <!-- Image placeholder -->
     <div id="contact-image-container" style="display: none">
-      <img
-        id="contact-image"
-        src="images/QR.jpg"
-        <!--
-        Ensure
-        this
-        path
-        is
-        correct
-        relative
-        to
-        your
-        HTML
-        file
-        --
-      />
-      alt="Contact Us Image" />
+      <img id="contact-image" src="images/QR.jpg" alt="Contact Us Image" />
     </div>
 
     <!-- Modal for Contact Image -->

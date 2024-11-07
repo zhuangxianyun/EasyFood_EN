@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>中华料理包</title>
+    <title>Chinese Meal Kit</title>
     <link rel="stylesheet" href="styles.css" />
     <style>
       /* Modal styles */
@@ -46,26 +46,28 @@
   </head>
   <body>
     <header>
-      <div class="logo">中华料理包-巴黎站</div>
+      <div class="logo">Chinese Meal Kit - Paris Station</div>
       <nav>
         <ul>
-          <li><a href="#home">主页</a></li>
-          <li><a href="#cart">购物车</a></li>
-          <li><a href="#contact" onclick="showContactModal()">联系我们</a></li>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#cart">Cart</a></li>
+          <li>
+            <a href="#contact" onclick="showContactModal()">Contact Us</a>
+          </li>
         </ul>
       </nav>
     </header>
 
     <main id="product-list">
-      <!-- 商品卡片将通过JavaScript动态添加 -->
+      <!-- Product cards will be dynamically added by JavaScript -->
     </main>
 
     <footer id="cart-bar">
-      <div id="cart-total">总计: €0.00</div>
-      <button id="checkout-btn">确认订单</button>
+      <div id="cart-total">Total: €0.00</div>
+      <button id="checkout-btn">Confirm Order</button>
     </footer>
 
-    <!-- 模态框结构 -->
+    <!-- Modal structure -->
     <div id="contactModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeContactModal()">&times;</span>
@@ -111,7 +113,7 @@
         document.getElementById("contactModal").style.display = "none";
       }
 
-      // 点击模态框外部关闭
+      // Click outside the modal to close
       window.onclick = function (event) {
         const modal = document.getElementById("contactModal");
         if (event.target == modal) {

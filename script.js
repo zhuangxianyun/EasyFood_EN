@@ -1,137 +1,149 @@
-// 模拟商品数据
+// Simulated product data
 const products = [
   {
     id: 1,
-    name: "梅菜扣肉",
+    name: "Braised Pork with Preserved Vegetables",
     price: 5.5,
     stock: 20,
     weight: 180,
     image: "./images/meicaikourou.jpg",
-    ingredients: "猪肉、梅干菜、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Pork, preserved vegetables, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
   {
     id: 2,
-    name: "台式卤肉",
+    name: "Taiwanese Braised Pork",
     price: 5.5,
     stock: 20,
     weight: 170,
     image: "./images/taisheluru.jpg",
-    ingredients: "猪肉、卤肉粉、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Pork, braised pork powder, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
   {
     id: 3,
-    name: "毛氏红烧肉",
+    name: "Mao's Braised Pork",
     price: 5.5,
     stock: 12,
     weight: 200,
     image: "./images/maoshihongshaorou.jpg",
-    ingredients: "猪肉、红烧肉粉、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Pork, braised pork powder, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
   {
     id: 4,
-    name: "鱼香肉丝",
+    name: "Fish-Flavored Shredded Pork",
     price: 5.0,
     stock: 15,
     weight: 200,
     image: "./images/yuxiangrousi.jpg",
-    ingredients: "猪肉、鱼香粉、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Pork, fish-flavored powder, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
   {
     id: 5,
-    name: "咖喱鸡肉",
+    name: "Curry Chicken",
     price: 5.0,
     stock: 3,
     weight: 220,
     image: "./images/galijirou.jpg",
-    ingredients: "鸡肉、咖喱粉、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Chicken, curry powder, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
   {
     id: 6,
-    name: "辣子鸡",
+    name: "Spicy Chicken",
     price: 5.0,
     stock: 8,
     weight: 170,
     image: "./images/laziji.jpg",
-    ingredients: "鸡肉、辣子粉、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Chicken, spicy powder, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
-  // 新增商品
+  // New products
   {
     id: 7,
-    name: "黄豆闷猪肘",
+    name: "Soybean Braised Pork Knuckle",
     price: 5.5,
     stock: 20,
     weight: 200,
     image: "./images/huangdoumenzhuzhou.jpg",
-    ingredients: "猪肘、黄豆、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Pork knuckle, soybeans, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
   {
     id: 8,
-    name: "黑椒肉丸",
+    name: "Black Pepper Meatballs",
     price: 5.5,
     stock: 7,
     weight: 200,
     image: "./images/heijiaorouwan.jpg",
-    ingredients: "猪肉、黑椒粉、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Pork, black pepper powder, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
   {
     id: 9,
-    name: "番茄牛腩",
+    name: "Tomato Beef Brisket",
     price: 5.8,
     stock: 20,
     weight: 200,
     image: "./images/fanqieniunan.jpg",
-    ingredients: "牛腩、番茄、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Beef brisket, tomato, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
   {
     id: 10,
-    name: "牛肉麻婆豆腐",
+    name: "Beef Mapo Tofu",
     price: 5.0,
     stock: 20,
     weight: 200,
     image: "./images/niuroumapodoufu.jpg",
-    ingredients: "牛肉、豆腐、麻婆豆腐酱、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Beef, tofu, mapo tofu sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
   {
     id: 11,
-    name: "肉丁炸酱",
+    name: "Minced Meat Sauce",
     price: 4.8,
     stock: 20,
     weight: 100,
     image: "./images/roudingzhajiang.jpg",
-    ingredients: "猪肉、炸酱、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Pork, fried sauce, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
   {
     id: 12,
-    name: "牛肉菌菇",
+    name: "Beef with Mushrooms",
     price: 4.8,
     stock: 20,
     weight: 100,
     image: "./images/niuroujungou.jpg",
-    ingredients: "牛肉、菌菇、酱油、葱姜蒜、八角等",
-    expiry: "常温12个月",
-    storage: "阴凉处存放",
+    ingredients:
+      "Beef, mushrooms, soy sauce, scallion, ginger, garlic, star anise, etc.",
+    expiry: "12 months at room temperature",
+    storage: "Store in a cool place",
   },
 ];
 
@@ -153,7 +165,7 @@ function renderProducts() {
             <h3>${product.name}</h3>
             <p>${product.weight}g</p>
             <p class="price">€${product.price.toFixed(2)}</p>
-            <p class="stock">剩余 ${product.stock} 份</p>
+            <p class="stock">Remaining ${product.stock} pieces</p>
             <div class="quantity-control">
                 <button onclick="changeQuantity(${product.id}, -1)">-</button>
                 <input type="number" value="0" min="0" max="${
@@ -163,7 +175,7 @@ function renderProducts() {
             </div>
             <button class="add-to-cart" onclick="addToCart(${
               product.id
-            })">加入购物车</button>
+            })">Add to Cart</button>
         `;
     productList.appendChild(productCard);
   });
@@ -213,7 +225,7 @@ function updateCartTotal() {
   for (const item of cart) {
     total += item.price * item.quantity;
   }
-  document.getElementById("cart-total").textContent = `总计: €${total.toFixed(
+  document.getElementById("cart-total").textContent = `Total: €${total.toFixed(
     2
   )}`;
 }
@@ -240,21 +252,21 @@ function showProductDetails(productId) {
     document.getElementById("modal-title").textContent = product.name;
     document.getElementById(
       "modal-ingredients"
-    ).textContent = `配料：${product.ingredients}`;
+    ).textContent = `Ingredients: ${product.ingredients}`;
     document.getElementById(
       "modal-expiry"
-    ).textContent = `保质期：${product.expiry}`;
+    ).textContent = `Expiry: ${product.expiry}`;
     document.getElementById(
       "modal-storage"
-    ).textContent = `储存建议：${product.storage}`;
+    ).textContent = `Storage Suggestion: ${product.storage}`;
 
     const modalWeight = document.getElementById("modal-weight");
     if (modalWeight) {
-      modalWeight.textContent = `重量：${product.weight}g`;
+      modalWeight.textContent = `Weight: ${product.weight}g`;
     } else {
       const newWeightElement = document.createElement("p");
       newWeightElement.id = "modal-weight";
-      newWeightElement.textContent = `重量：${product.weight}g`;
+      newWeightElement.textContent = `Weight: ${product.weight}g`;
       document.querySelector(".modal-content").appendChild(newWeightElement);
     }
 
@@ -290,7 +302,7 @@ renderProducts();
 // 可以添加一个新的函数来提供视觉反馈
 function showCartNotification() {
   const notification = document.createElement("div");
-  notification.textContent = "已添加到购物车";
+  notification.textContent = "Added to cart";
   notification.style.position = "fixed";
   notification.style.bottom = "20px";
   notification.style.right = "20px";
